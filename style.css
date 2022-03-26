@@ -21,6 +21,10 @@ html,body{
    font-size: 16px;
    line-height: 1;
 }
+/* запрещает прокрутку основной страницы при включенном меню + код в js*/
+body._lock{
+   overflow: hidden;
+}
 
 /* обнуление ститей */
 
@@ -51,20 +55,22 @@ html,body{
    max-width: 1220px;
    margin: 0 auto;
 }
-.page__secyion1{
+.page__section1{
    background-color: #433452;
 }
-.page__secyion2{
+.page__section2{
    background-color: #689202;
 }
-.page__secyion3{
+.page__section3{
    background-color: #658492;
 }
 .page__title{
+   color: #fff;
    font-size: 40px;
    margin: 0 0 20px 0;
 }
 .page__text{
+   color: #fff;
    font-size: 16px;
    line-height: 150%;
 }
@@ -73,6 +79,7 @@ html,body{
 }
 
 .page__sub-title{
+   color: #fff;
    font-size: 30px;
    margin: 0 0 20px 0;
 }
@@ -106,8 +113,9 @@ html,body{
 
 
 
-
-
+.menu__icon{
+   display: none;
+}
 
 
 
@@ -171,6 +179,16 @@ body._touch .menu__arrow{
    border-top: 10px solid #fff;
 }
 
+body._touch .menu__list > li._active .menu__sub-list{
+   opacity: 1;
+   visibility: visible;
+   transform: translate(0px, 0px);
+   pointer-events: all;
+}
+body._touch .menu__list > li._active .menu__arrow{
+   transform: rotate(-180deg);
+}
+
 /* ------------------------------------------- */
 @media (min-width: 767px) {
    .menu__list{
@@ -186,5 +204,102 @@ body._touch .menu__arrow{
       visibility: hidden;
       pointer-events: none;
       transition: all .3s ease 0s;
+   }
+}
+/* для меню-бургер */
+@media (max-width: 767px) {
+   .menu__icon{
+      z-index: 5;
+      display: block;
+      position: relative;
+      width: 30px;
+      height: 18px;
+      cursor: pointer;
+   }
+   .menu__icon span,
+   .menu__icon::before,
+   .menu__icon::after{
+      left: 0;
+      position: absolute;
+      height: 10%;
+      width: 100%;
+      transition: all .3s ease 0s;
+      background-color: #fff;
+   }
+   .menu__icon::before,
+   .menu__icon::after{
+      content: "";
+   }
+   .menu__icon::before{
+      top: 0;
+   }
+   .menu__icon::after{
+      bottom: 0;
+   }
+   /* превращаем меню бургер в крестик */
+   .menu__icon span{
+      top: 50%;
+      transform: scale(1) translate(0px, -50%);
+   }
+   .menu__icon._active span{
+      transform: scale(0) translate(0px, 50%);
+   }
+   .menu__icon._active::before{
+      top: 50%;
+      transform:rotate(-45deg) translate(0px, -50%);
+   }
+   .menu__icon._active::after{
+      bottom: 50%;
+      transform:rotate(45deg) translate(0px, 50%);
+   }
+   /* закончили превращение меню бургер в крестик */
+   .menu__body{
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      padding: 100px 30px 30px 30px ;
+      transition: left .3s ease 0s;
+      overflow: auto;
+   }
+   .menu__body._active{
+      left: 0;
+   }
+      .menu__body::before{
+      content: "";
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      height: 70px;
+      background-color: #912105;
+      z-index: 2;
+   }
+
+   .menu__list > li{
+      flex-wrap: wrap;
+      margin: 0 0 30px 0;
+   }
+   .menu__list > li:last-child{
+      margin-bottom: 0;
+   }
+   .menu__list > li._active .menu__sub-list{
+      display: block;
+   }
+   .menu__link{
+      font-size: 24px;
+   }
+   .menu__sub-list{
+      position: relative;
+      background-color: #fff;
+      flex: 1 1 100%;
+      margin: 20px 0 0 0;
+      display: none;
+   }
+   .menu__sub-link{
+      font-size: 20px;
+      color: #000;
    }
 }
